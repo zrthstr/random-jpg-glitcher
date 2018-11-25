@@ -41,8 +41,7 @@ def save_file(img_np):
     ext = ".png"
     outdir = "output/"
     out = outdir + str(int(time.time())) + ext
-    im = Image.fromarray(img_np)
-    im.save(out)
+    Image.fromarray(img_np).save(out)
     print("saved images as: {}".format(out))
 
 
@@ -51,11 +50,10 @@ def save_vid(frames, fps):
     outdir = "output/"
     out = outdir + str(int(time.time())) + ext
     writer = imageio.get_writer(out, fps=fps)
-    for im in frames:
-        # print(type(im))
-        if im is None:
+    for frame in frames:
+        if frame is None:
             continue
-        writer.append_data(im)
+        writer.append_data(frame)
     writer.close()
     print("saved video as: {}".format(out))
 
@@ -89,7 +87,7 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
         img_str = org_img_str[:]
         for _ in range(steps_per_round):
             np_frombuff = np.frombuffer(img_str, np.uint8)
-            frames.append(cv2.imdecode(np_frombuff,  cv2.IMREAD_COLOR))
+            frames.append(cv2.imdecode(np_frombuff, cv2.IMREAD_COLOR))
             img_str = mutate(glitch_per_step, img_str)
 
     save_vid(frames, fps)
@@ -99,12 +97,12 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
 def validate_cmd_arguments(args):
     vid_limits = {
         "fps": {"mi": 0.5, "ma": 60},
-        "rounds": {"mi": 1,  "ma": 100},
-        "steps_per_round": {"mi": 1,  "ma": 100},
-        "glitch_per_step": {"mi": 1,  "ma": 100}
+        "rounds": {"mi": 1, "ma": 100},
+        "steps_per_round": {"mi": 1, "ma": 100},
+        "glitch_per_step": {"mi": 1, "ma": 100}
     }
     img_limits = {
-        "nglitch": {"mi": 0,  "ma": 100}
+        "nglitch": {"mi": 0, "ma": 100}
     }
     default_source_image = 'input/einstein.jpg'
 
@@ -162,7 +160,7 @@ def parse_cmd_arguments():
     img_parser = subparser.add_parser('img', help='create image')
     img_parser.add_argument('--nglitch', default=0, help='count or range of mutations per image. default: random.')
     vid_parser = subparser.add_parser('vid', help='create animationb')
-    vid_parser.add_argument("--fps", default=1, type=float,  help="frames per second")
+    vid_parser.add_argument("--fps", default=1, type=float, help="frames per second")
 
     vid_parser.add_argument('--rounds', default=1, type=int, help='rounds of seperate mutations')
     vid_parser.add_argument('--steps-per-round', default=10, type=int, help='mutation steps per round')
@@ -180,5 +178,4 @@ if __name__ == '__main__':
     if args.action == 'img':
         img_mutate(img_str, args.nglitch)
     elif args.action == 'vid':
-        vid_mutate(img_str, args.fps, args.rounds,
-                   args.steps_per_round, args.glitch_per_step)
+        vid_mutate(img_str, args.fps, args.rounds, args.steps_per_round, args.glitch_per_step)
