@@ -124,22 +124,64 @@ def parse_mutation_count(mut):
     print("bad paramter: mutattions")
     print("options: unset, 0 < mutation < {}, min-max".format(total_maxi))
     sys.exit()
+
+def validate_cmd_arguments(args):
+    vid_limits = {
+        "fps": {"mi": 0.5  "ma:" 60}
+        "rounds": {"mi": 1  "ma:" 100}
+        "steps_per_round": {"mi": 1  "ma:" 100}
+        "glitches_per_step": {"mi": 1  "ma:" 100}
+    }
+    img_limits = {
+        "nglitch": {"mi": 1  "ma:" 100}
+    }
+
+
+    if args.action == 'img':
+        for value, limits in vid_limits.items():
+            print("validating ", args[value])
+            if not limits["mi"] <= args[value] <= limits["ma"]:
+                print("Bad cmd argument or out of range.")
+                print("Try: {} <= {} <= {}".format(limits["mi"] ,value , limits["ma"]))
+                sys.exit()
+            print("ok")
+
+    elif args.action == 'vid':
+        print("validating ", args.nglitch)
+        if not img_limits["mi"] <= args.nglitch <= img_limits["ma"]:
+            print("Bad cmd argument or out of range.")
+            print("Try: {} <= {} <= {}".format(img_limits["mi"], args.nglitch, img_limits["ma"]  ))
+            sys.exit()
+        
+    
+    
+    
+
 def parse_cmd_arguments():
     example=('examples:\n  ./rjg.py img\n'
-                '  ./rjg.py vid --mspf=133\n'
-                '  ./rjg.py vid --mode prog --mut-pf=1000 \n'
-                '  ./rjg.py vid --mode seq --seq-rounds=10')
+                '  OLD ./rjg.py vid --mspf=133\n'
+                '  OLD ./rjg.py vid --mode prog --mut-pf=1000 \n'
+                '  OLD ./rjg.py vid --mode seq --seq-rounds=10')
     parser = argparse.ArgumentParser(epilog=example, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--source', default=False, help='source image file')
-    parser.add_argument('--mutations', default=False, help='count or range of mutations per image')
+    parser.add_argument('--source', default=False, type=str, help='source image file')
+
     subparser = parser.add_subparsers(dest='action', required=True)
     img_parser = subparser.add_parser('img', help='create image')
+    img_parser.add_argument('--nglitch', default=0, type=int, help='count or range of mutations per image. default: random.')
+    ## todo process this..
+
     vid_parser = subparser.add_parser('vid', help='create animationb')
-    vid_parser.add_argument("--mspf", default=1000, type=int,  help="ms per frame. 1-10.000")
-    vid_parser.add_argument("--mode", default='seq', type=str, help='prog(ressive), or seq(ential)' )
-    vid_parser.add_argument('--seq-rounds', default=10, type=int, help='number of sequential rounds (seq mode)')
-    vid_parser.add_argument('--mutpf', default=1, type=int, help='number of mutations per frame (prog mode)')
+    vid_parser.add_argument("--fps", default=1, type=float,  help="ms per frame. 0.5-30")
+    ## todo envorce this..
+
+    vid_parser.add_argument('--rounds', default=1, type=int, help='rounds of seperate mutations')
+    vid_parser.add_argument('--steps-per-round', default=10, type=int, help='mutation steps per round')
+    vid_parser.add_argument('--glitchs-per-step', default=1, type=int, help='number of mutations per step')
+
     return parser.parse_args()
+
+
+
 if __name__ == '__main__':
     args = parse_cmd_arguments()
     ## outdir = 'output'
@@ -149,6 +191,6 @@ if __name__ == '__main__':
     if args.action == 'img':
         img_mutate(img_str, args.mutations)
     elif args.action == 'vid':
-        vid_mutate(img_str, args.mutations, args.mode, args.seq_rounds, args.mutpf, args.mspf)A
+        vid_mutate(img_str, args.mutations, args.mode, args.seq_rounds, args.mutpf, args.mspf)
 
 
