@@ -13,6 +13,13 @@ tbd...
 
 ```
 
+## Sample Video output
+```
+./rjg.py --mutations 5-10 vid --mode seq --mspf=250 --seq-rounds=15
+```
+[watch video](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-seq.mp4)
+
+
 ## Sample image output
 ```
 for e in $(seq 10); do ./rjg.py img ; done
@@ -24,8 +31,4 @@ for e in $(seq 10); do ./rjg.py img ; done
 ![](output/sample9.png) ![](output/sample10.png)
 ![](output/sample11.png) ![](output/sample12.png)
 
-## Sample Video output
-```
-./rjg.py --mutations 5-10 vid --mode seq --mspf=250 --seq-rounds=15
-```
-<video src="output/sample-seq.mp4" width="320" height="200" controls preload></video>
+
