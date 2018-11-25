@@ -14,6 +14,9 @@ tbd...
 ```
 
 ## Sample image output
+```
+for e in $(seq 10); do ./rjg.py img ; done
+```
 
 ![](output/sample1.png) ![](output/sample5.png)
 ![](output/sample3.png) ![](output/sample6.png)
@@ -22,3 +25,7 @@ tbd...
 ![](output/sample11.png) ![](output/sample12.png)
 
 ## Sample Video output
+```
+./rjg.py --mutations 5-10 vid --mode seq --mspf=250 --seq-rounds=15
+```
+<video src="output/sample-seq.mp4" width="320" height="200" controls preload></video>
