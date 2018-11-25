@@ -80,7 +80,7 @@ optional arguments:
 
 ## sample image output
 ```
-% for e in $(seq 10); do ./rjg.py img ; done
+% for e in $(seq 10); do ./rjg.py img --nglitch=35-80 ; done
 ```
 
 ![](output/sample1.png) ![](output/sample5.png)
