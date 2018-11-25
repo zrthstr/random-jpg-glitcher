@@ -79,6 +79,7 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
     for seq in range(rounds):
         img_str = org_img_str[:]
         for step in range(steps_per_round):
+            
             frames.append(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
     #print(frames)
     save_vid(frames, fps)
@@ -99,7 +100,6 @@ def parse_mutation_count_2(mut):
         print("mutations must be > 0 > {}".format(total_maxi))
         sys.exit()
     if isinstance(mut, str):
-        print("IS ISNT")
         # this should allow any positive int, '-', then any positive int
         if re.match(r'^[1-9]\d*-[1-9]\d*$', mut):
             mini, maxi = mut.split('-')
@@ -123,7 +123,7 @@ def validate_cmd_arguments(args):
     }
     default_source_image = 'input/einstein.jpg'
 
-    print(args)
+    #print(args)
 
     if not args.source:
         args.source = default_source_image
@@ -180,7 +180,7 @@ def parse_cmd_arguments():
     ## todo process this..
 
     vid_parser = subparser.add_parser('vid', help='create animationb')
-    vid_parser.add_argument("--fps", default=1, type=float,  help="ms per frame. 0.5-30")
+    vid_parser.add_argument("--fps", default=1, type=float,  help="frames per second")
     ## todo envorce this..
 
     vid_parser.add_argument('--rounds', default=1, type=int, help='rounds of seperate mutations')

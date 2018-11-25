@@ -14,6 +14,9 @@ function vid {
     echo "running vid tests"
     echo "-----------------"
     ./rjg.py vid || exit
+    echo "-----------------"
+    ./rjg.py vid --fps=10 --rounds=20 --steps-per-round=10 --glitch-per-step=2
+    echo "-----------------"
 }
 
 function all {
