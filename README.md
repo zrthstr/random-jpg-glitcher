@@ -3,7 +3,7 @@ Randomly glitches JPGs (and other images) and saves output as image or video fil
 
 ## overview
 ```
-./rjg.py --source input/moonlanding.jpg img --nglitch 60
+% ./rjg.py --source input/moonlanding.jpg img --nglitch 60
 ```
 ![](output/sample_moon.png)
 
@@ -66,13 +66,13 @@ optional arguments:
 
 ## sample video output
 ```
-./rjg.py vid --fps=4 --rounds=1 --steps-per-round=60 --glitch-per-step=1
+% ./rjg.py vid --fps=4 --rounds=1 --steps-per-round=60 --glitch-per-step=1
 ```
 [video (progressive)](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-progressive.mp4)
 
 
 ```
-./rjg.py vid --fps=4 --rounds=15 --steps-per-round=6 --glitch-per-step=6
+% ./rjg.py vid --fps=4 --rounds=15 --steps-per-round=6 --glitch-per-step=6
 ```
 [video (sequential)](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-seqential.mp4)
 
@@ -80,7 +80,7 @@ optional arguments:
 
 ## sample image output
 ```
-for e in $(seq 10); do ./rjg.py img ; done
+% for e in $(seq 10); do ./rjg.py img ; done
 ```
 
 ![](output/sample1.png) ![](output/sample5.png)
