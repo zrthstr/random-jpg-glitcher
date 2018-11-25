@@ -46,6 +46,9 @@ def save_vid(frames, fps ):
     out = outdir + str(int(time.time())) + ext
     writer = imageio.get_writer(out, fps=2)
     for im in frames:
+        #print(type(im))
+        if im is None:
+            continue
         writer.append_data(im)
     writer.close()
     print("saved video as: {}".format(out))
@@ -67,18 +70,6 @@ def img_mutate(img_str, n_mutations):
     save_file(img_np)
     display(img_np)
 
-#def new_sequence(img_str, mutations, XXX):
-#    mutations = parse_mutation_count(mutations)
-#    if mutations <= mutpf:
-#        frame_count = 1
-#    else:
-#        frame_count = mutations // mutpf
-#    seq = []
-#    for frame in range(frame_count):
-#        for mut in range(parse_mutation_count(mutations)):
-#            img_str = random_mutate(img_str)
-#        seq.append(cv2.imdecode(np.frombuffer(img_str, np.uint8), cv2.IMREAD_COLOR))
-#    return seq
 
 def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
     print("Video mode: fps={}, rounds={}, steps_per_round={}, glitch_per_step={}.".format(fps, rounds, steps_per_round, glitch_per_step))
@@ -88,9 +79,8 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
     for seq in range(rounds):
         img_str = org_img_str[:]
         for step in range(steps_per_round):
-            #frames.extend(new_sequence(img_str, mutations, mutpf))
-            frames.extend(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
-    print(frames)
+            frames.append(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
+    #print(frames)
     save_vid(frames, fps)
     #display_vid()
 
