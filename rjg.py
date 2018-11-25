@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 import re
-import cv2
 import time
 import sys
-import numpy as np
 import random
-import imageio
 import argparse
-from PIL import Image
 from pathlib import Path
+
+import numpy as np
+from PIL import Image
+import cv2
+import imageio
 
 def random_mutate(img_str):
     """
@@ -23,7 +24,7 @@ def random_mutate(img_str):
     return new_img_str
 
 def mutate(n_mutations, img_str):
-    for e in range(n_mutations):
+    for _ in range(n_mutations):
         img_str = random_mutate(img_str)
     return img_str
 
@@ -76,43 +77,15 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
 
     frames = []
     org_img_str = img_str[:]
-    for seq in range(rounds):
+    for _ in range(rounds):
         img_str = org_img_str[:]
-        for step in range(steps_per_round):
-           
-            #img_str = mutate(glitch_per_step, img_str)
+        for _ in range(steps_per_round):
             np_frombuff =  np.frombuffer(img_str, np.uint8)
             frames.append(cv2.imdecode(np_frombuff,  cv2.IMREAD_COLOR))
             img_str = mutate(glitch_per_step, img_str)
 
-            #frames.append(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
     save_vid(frames, fps)
     #display_vid()
-
-def parse_mutation_count_2(mut):
-    """ n can be: 0, > 1, x-z"""
-    mini = 3
-    maxi = 70
-    total_maxi = 10000
-
-    if not mut:
-        return random.randint(mini, maxi)
-    if str(mut).isdigit():
-        mut = int(mut)
-        if 0 < mut < total_maxi:
-            return mut
-        print("mutations must be > 0 > {}".format(total_maxi))
-        sys.exit()
-    if isinstance(mut, str):
-        # this should allow any positive int, '-', then any positive int
-        if re.match(r'^[1-9]\d*-[1-9]\d*$', mut):
-            mini, maxi = mut.split('-')
-            mini, maxi = int(mini), int(maxi)
-            if 0 < mini < maxi < total_maxi:
-                return random.randint(mini, maxi)
-    print("bad paramter: mutattions")
-    print("options: unset, 0 < mutation < {}, min-max".format(total_maxi))
-    sys.exit()
 
 
 def validate_cmd_arguments(args):
