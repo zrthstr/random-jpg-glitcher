@@ -45,6 +45,11 @@ for e in $(seq 10); do ./rjg.py img ; done
 ![](output/sample9.png) ![](output/sample10.png)
 ![](output/sample11.png) ![](output/sample12.png)
 
+## Todo:
+* fix:
+```
+WARNING:root:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (525, 400) to (528, 400) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to None (risking incompatibility). You may also see a FFMPEG warning concerning speedloss due to data not being aligned.
+```
 
 
 
