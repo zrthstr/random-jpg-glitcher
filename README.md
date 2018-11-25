@@ -15,10 +15,24 @@ tbd...
 
 ## Sample Video output
 ```
-./rjg.py --mutations 5-10 vid --mode seq --mspf=250 --seq-rounds=15
+./rjg.py vid --fps=4 --rounds=1 --steps-per-round=60 --glitch-per-step=1
 ```
-[watch video](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-seq.mp4)
+[video (progressive)](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-progressive.mp4)
 
+
+
+```
+./rjg.py vid --fps=4 --rounds=15 --steps-per-round=6 --glitch-per-step=6
+```
+[video (sequential)](https://raw.githubusercontent.com/zrthstr/random-jpg-glitcher/master/output/sample-seqential.mp4)
+
+
+
+## select source image
+```
+./rjg.py --source input/moonlanding.jpg img --nglitch 60
+```
+![](output/sample_moon.png)
 
 ## Sample image output
 ```
@@ -30,5 +44,7 @@ for e in $(seq 10); do ./rjg.py img ; done
 ![](output/sample7.png) ![](output/sample8.png)
 ![](output/sample9.png) ![](output/sample10.png)
 ![](output/sample11.png) ![](output/sample12.png)
+
+
 
 
