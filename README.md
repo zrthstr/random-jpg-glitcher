@@ -8,8 +8,51 @@ pip install -r requirements.txt
 
 ## usage
 ```
-./rjg.py -h
-tbd...
+% ./rjg.py --help
+
+usage: rjg.py [-h] [--source SOURCE] {img,vid} ...
+
+positional arguments:
+  {img,vid}
+    img            create image
+    vid            create animationb
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --source SOURCE  source image file
+
+examples:
+  ./rjg.py img --nglitch=70
+  ./rjg.py vid  --fps=8 --steps-per-round=10 
+  ./rjg.py vid  --rounds=30 --steps-per-step=10
+```
+### usage: img
+```
+% ./rjg.py img --help
+
+usage: rjg.py img [-h] [--nglitch NGLITCH]
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --nglitch NGLITCH  count or range of mutations per image. default: random
+```
+
+### usage: vid
+```
+% ./rjg.py vid --help
+
+usage: rjg.py vid [-h] [--fps FPS] [--rounds ROUNDS]
+                  [--steps-per-round STEPS_PER_ROUND]
+                  [--glitch-per-step GLITCH_PER_STEP]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --fps FPS             frames per second
+  --rounds ROUNDS       rounds of seperate mutations
+  --steps-per-round STEPS_PER_ROUND
+                        mutation steps per round
+  --glitch-per-step GLITCH_PER_STEP
+                        number of mutations per step
 
 ```
 
