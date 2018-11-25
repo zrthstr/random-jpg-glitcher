@@ -44,7 +44,7 @@ def save_vid(frames, fps ):
     ext = ".mp4"
     outdir = "output/"
     out = outdir + str(int(time.time())) + ext
-    writer = imageio.get_writer(out, fps=2)
+    writer = imageio.get_writer(out, fps=fps)
     for im in frames:
         #print(type(im))
         if im is None:
@@ -79,9 +79,13 @@ def vid_mutate(img_str, fps, rounds, steps_per_round, glitch_per_step):
     for seq in range(rounds):
         img_str = org_img_str[:]
         for step in range(steps_per_round):
-            
-            frames.append(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
-    #print(frames)
+           
+            #img_str = mutate(glitch_per_step, img_str)
+            np_frombuff =  np.frombuffer(img_str, np.uint8)
+            frames.append(cv2.imdecode(np_frombuff,  cv2.IMREAD_COLOR))
+            img_str = mutate(glitch_per_step, img_str)
+
+            #frames.append(cv2.imdecode(np.frombuffer(mutate(glitch_per_step, img_str), np.uint8), cv2.IMREAD_COLOR))
     save_vid(frames, fps)
     #display_vid()
 
