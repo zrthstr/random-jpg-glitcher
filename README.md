@@ -1,5 +1,5 @@
 # Random JPG Glitcher
-Randomly glitches JPGs and saves output as image or video file
+Randomly glitches JPGs (and other images) and saves output as image or video file
 
 ## install
 ```
