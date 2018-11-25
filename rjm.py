@@ -125,36 +125,37 @@ def parse_mutation_count(mut):
     print("options: unset, 0 < mutation < {}, min-max".format(total_maxi))
     sys.exit()
 
+
 def validate_cmd_arguments(args):
     vid_limits = {
-        "fps": {"mi": 0.5  "ma:" 60}
-        "rounds": {"mi": 1  "ma:" 100}
-        "steps_per_round": {"mi": 1  "ma:" 100}
-        "glitches_per_step": {"mi": 1  "ma:" 100}
+        "fps": {"mi": 0.5 , "ma": 60},
+        "rounds": {"mi": 1,  "ma": 100},
+        "steps_per_round": {"mi": 1,  "ma": 100},
+        "glitches_per_step": {"mi": 1,  "ma": 100}
     }
     img_limits = {
-        "nglitch": {"mi": 1  "ma:" 100}
+        "nglitch": {"mi": 0,  "ma": 100}
     }
 
+    print(args)
 
-    if args.action == 'img':
+    if args.action == 'vid':
         for value, limits in vid_limits.items():
-            print("validating ", args[value])
-            if not limits["mi"] <= args[value] <= limits["ma"]:
+            print("validating: ", value, getattr(args, value))
+            if not limits["mi"] <= value <= limits["ma"]:
                 print("Bad cmd argument or out of range.")
                 print("Try: {} <= {} <= {}".format(limits["mi"] ,value , limits["ma"]))
                 sys.exit()
             print("ok")
 
-    elif args.action == 'vid':
-        print("validating ", args.nglitch)
-        if not img_limits["mi"] <= args.nglitch <= img_limits["ma"]:
+    elif args.action == 'img':
+        print("validating nglitch: ", args.nglitch)
+        mi, ma = img_limits["nglitch"]["mi"], img_limits["nglitch"]["ma"]
+        if not mi <= args.nglitch <= ma:
             print("Bad cmd argument or out of range.")
-            print("Try: {} <= {} <= {}".format(img_limits["mi"], args.nglitch, img_limits["ma"]  ))
+            print("Try: {} <= {} <= {}".format(mi, args.nglitch, ma))
             sys.exit()
         
-    
-    
     
 
 def parse_cmd_arguments():
@@ -178,7 +179,9 @@ def parse_cmd_arguments():
     vid_parser.add_argument('--steps-per-round', default=10, type=int, help='mutation steps per round')
     vid_parser.add_argument('--glitchs-per-step', default=1, type=int, help='number of mutations per step')
 
-    return parser.parse_args()
+    args = parser.parse_args()
+    validate_cmd_arguments(args)
+    args 
 
 
 
