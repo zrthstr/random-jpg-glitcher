@@ -1,1 +1,1 @@
-rm output/15431*
+rm output/15431* 2>> /dev/null

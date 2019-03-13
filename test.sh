@@ -26,7 +26,7 @@ function all {
 }
 
 function usage {
-    echo "runn: img, via or all"
+    echo "uage: ./test.sh [img, via, all]"
 }
 
 if [ "$1" == "" ]; then
